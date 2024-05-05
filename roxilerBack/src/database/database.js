@@ -24,4 +24,12 @@ db.run(
   }
 );
 
+const data = require('./dataFetch')
+
+if(data.length === 0){
+  console.log('no data')
+}else{
+  console.log(data)
+}
+
 module.exports = db;

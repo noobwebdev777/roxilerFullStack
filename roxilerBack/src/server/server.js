@@ -4,9 +4,9 @@ const app = express();
 
 const db = require('../database/database');
 
-const data = require('../database/dataFetch');
+// const data = require('../database/dataFetch');
 
-console.log(data)
+// console.log(data, 'server data')
 
 const port = process.env.PORT || 5000;
 
