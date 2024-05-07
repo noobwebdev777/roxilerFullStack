@@ -1,48 +1,49 @@
 // database.js
-const sqlite3 = require("sqlite3").verbose();
+const sqlite3 = require('sqlite3').verbose();
 
-const db = new sqlite3.Database("products.db");
+const db = new sqlite3.Database('products.db');
 
-require("dotenv").config();
+require('dotenv').config();
 
-const fetch = require("node-fetch");
+const fetch = require('node-fetch');
 
-const json = require("../../product_transaction.json");
+const json = require('../../product_transaction.json');
 
 const url = process.env.PRIMARY_DATA;
 
+db.run(
+  `CREATE TABLE IF NOT EXISTS products (
+id INTEGER,
+title TEXT ,
+price INTEGER ,
+description TEXT,
+category TEXT,
+image TEXT,
+sold INTEGER DEFAULT 0,
+dateOfSale TEXT
+);`,
+  (err) => {
+    if (err) {
+      console.error('Error creating table:', err.message);
+    } else {
+      console.log('Users table created successfully.');
+    }
+  }
+);
+
 db.all(`SELECT COUNT(*) AS total_rows FROM products;`, (err, rows) => {
   if (err) {
-    console.error("Error executing query:", err.message);
+    console.error('Error executing query:', err.message);
   } else {
     const totalRows = rows[0].total_rows;
     if (totalRows === 0) {
       // Create a table
-      db.run(
-        `CREATE TABLE IF NOT EXISTS products (
-    id INTEGER,
-    title TEXT ,
-    price INTEGER ,
-    description TEXT,
-    category TEXT,
-    image TEXT,
-    sold INTEGER DEFAULT 0,
-    dateOfSale TEXT
-);`,
-        (err) => {
-          if (err) {
-            console.error("Error creating table:", err.message);
-          } else {
-            console.log("Users table created successfully.");
-          }
-        }
-      );
 
       const fetchData = fetch(url)
         .then((response) => {
           console.log(response.ok);
           if (!response.ok) {
-            throw new Error("Failed to fetch data");
+            throw new Error('Failed to fetch data');
           }
           return response.json();
         })
@@ -80,7 +81,7 @@ db.all(`SELECT COUNT(*) AS total_rows FROM products;`, (err, rows) => {
 
             db.run(query, function (err) {
               if (err) {
-                console.error("Error inserting data:", err.message);
+                console.error('Error inserting data:', err.message);
               } else {
                 console.log(`Row inserted with rowid ${this.lastID}`);
               }
@@ -89,7 +90,7 @@ db.all(`SELECT COUNT(*) AS total_rows FROM products;`, (err, rows) => {
         })
         .catch((error) => console.log(error));
     } else {
-      console.log("product_db have data, no need to fetch data");
+      console.log('product_db have data, no need to fetch data');
     }
   }
 });
