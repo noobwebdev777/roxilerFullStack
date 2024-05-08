@@ -13,7 +13,7 @@ app.get('/transactiontable', (req, res) => {
   const { search, offset } = req.query;
   let query = ``;
 
-  console.log(search);
+  // console.log(search);
 
   if (search == '**') {
     query = `select * from products limit 10 offset ${offset}`;
@@ -22,7 +22,7 @@ app.get('/transactiontable', (req, res) => {
   limit 10 offset ${offset};`;
   }
 
-  console.log(query);
+  // console.log(query);
 
   db.all(query, (err, rows) => {
     if (err) {
@@ -41,7 +41,7 @@ app.get('/statistics/:month', (req, res) => {
     if (err) {
       res.status(500).json({ message: 'contact me on github @noobwebdev777' });
     } else {
-      console.log(query);
+      // console.log(query);
       console.log(rows.length);
       if (rows.length === 1) {
         const saleAmount = rows[0].total_amount;
@@ -79,7 +79,7 @@ app.get('/barchart/price', (req, res) => {
           .status(500)
           .json({ message: 'contact me on github @noobwebdev777' });
       } else {
-        console.log(rows[0].item_count);
+        // console.log(rows[0].item_count);
         res.status(200).json({
           pricefrom: from,
           itemCount: rows[0].item_count,
@@ -121,6 +121,7 @@ app.get('/barchart/itemscount/:month', (req, res) => {
 
 //total items in a given price range
 app.get('/barchart/data/:month', (req, res) => {
+  console.log('api5')
   const { month } = req.params;
   const query = `SELECT
   CASE
@@ -163,6 +164,9 @@ ORDER BY
     }
   });
 });
+
+
+//------------------------server_lol_________________________
 
 let server;
 

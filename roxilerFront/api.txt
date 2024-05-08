@@ -1,0 +1,10 @@
+one
+http://localhost:3000/transactiontable?search=**&offset=0
+
+2.http://localhost:3000/statistics/12
+
+3.http://localhost:3000/barchart/price?from=500&to=1000
+
+4.http://localhost:3000/barchart/itemscount/07
+
+5.http://localhost:3000/barchart/data/07
