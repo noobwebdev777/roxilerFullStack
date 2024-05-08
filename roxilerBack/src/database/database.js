@@ -15,7 +15,7 @@ db.run(
   `CREATE TABLE IF NOT EXISTS products (
 id INTEGER,
 title TEXT ,
-price INTEGER ,
+price DECIMAL(10, 2),
 description TEXT,
 category TEXT,
 image TEXT,
