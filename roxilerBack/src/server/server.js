@@ -109,9 +109,23 @@ app.get('/barchart/price', (req, res) => {
 //items count for bar chart
 app.get('/barchart/itemscount/:month', (req, res) => {
   const {month} = req.params
-  const query = `SELECT count(id) FROM products WHERE substr(dateOfSale, 6, 2) = '${month}' GROUP by category`
-  
+  const query = `SELECT category, count(id) AS items FROM products WHERE substr(dateOfSale, 6, 2) = '${month}' GROUP by category`
+  db.all(query, (err, rows) => {
+    if(err){
+      res
+          .status(500)
+          .json({ message: 'contact me on github @noobwebdev777' });
+    }else{
+      console.log(rows)
+      res.status(200).json({itemscount:rows})
+    }
+  })
 });
+
+//total items in a given price range
+app.get('/barchart/data', (req, res) => {
+  console.log('data')
+})
 
 app.listen(port, () => {
   console.log(`server started at port ${port}`);
